@@ -1,0 +1,158 @@
+p {
+		color:blue;
+		font-size:25px;
+	}
+
+header {
+	height: 150px; 
+	width: 99%; 
+	border: 2px solid black; 
+	background-color: #ff6699; 
+	margin-bottom:15px;
+}
+
+footer {
+	height:200px;
+	width:99%;
+	border:2px solid black;
+	background-color:#00ccff;
+}
+
+
+/* classes */
+.listitem {
+		color:black;
+		font-size:20px;
+		font-weight: bold;
+	}
+
+.para1 {
+		color:red;
+		font-size:24px;
+		font-weight: bold;
+		padding-left:25px;
+}
+
+.wrap-trivia {
+	height:310px;
+	width:450px;
+	border:5px double blue;
+	margin:5px;
+}
+
+.wrap-list {
+	height:160px;
+	width:225px;
+	border:5px dashed green;
+	margin-bottom:160px;
+}
+	
+
+.wrap-text {
+	color: #994d00;
+	font-weight: bold;
+}
+
+.navitem {
+	list-style-type:none;
+	display:inline;
+	padding-right:1.5em;
+}
+
+.clearfloat{
+	clear:right;
+}
+
+/* ids */
+#background {
+	background-color:lightgreen;
+	color:black;
+}
+
+#bgimage {
+	height:90%;
+	width: 99%;
+}
+#image {
+	height:50%;
+}
+
+#button {
+	height:50px;
+	width:100px;
+	color:white;
+	background-color:black;
+	border-radius:15px;
+}
+
+#one{
+	height: 150px;
+	width: 150px;
+	background-color: red;
+	display: inline-block;
+	position: absolute;
+	z-index: 1; 
+	position:relative;
+	top:300px;
+
+}
+
+#two{
+	height: 150px;
+	width: 150px;
+	background-color: gray;
+	display: inline;
+	position: absolute;
+	z-index: 2;
+}
+
+#three{
+	height: 150px;
+	width: 150px;
+	background-color: blue;
+	display: inline;
+	position: absolute;
+	position: fixed;
+	left: 25%;
+}
+
+#body{
+	height: 2048px;
+}
+
+#navmenu{
+	width:250px;
+	height:30px;
+	margin:auto;
+}
+
+#rightside{
+	float:right;
+	width:60%;
+	margin-top:2px;
+	border:5px double white;
+}
+
+#leftside{
+	width:30%;
+	border:5px double red;
+	display: inline;
+	position: absolute;
+}
+
+a:link{
+	color:red;
+}
+
+a:visited{
+	color:blue;
+}
+
+a:hover{
+	color:purple;
+}
+
+a:active{
+	color:orange;
+}
+

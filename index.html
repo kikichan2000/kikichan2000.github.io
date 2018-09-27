@@ -1,0 +1,113 @@
+<html> 
+	<head>
+		<!-- External CSS Styling --> 
+		<link type="text/css" rel="stylesheet" href="main.css" />
+
+		<title>Lace 'n Charm </title>
+
+		<!-- Internal CSS Styling --> 
+		<style>
+		
+		</style>
+
+		<script>
+			function banner(){ 
+				var text = confirm("Did You Really Want to Click on My Banner?"); 
+				return text; 
+			}
+
+			function answer(){ 
+				var radio = document.getElementsByName("TRIVIA");
+				var selection = false;
+				var message = "";
+				for( var i = 0; i < radio.length; i++) {
+					if(radio[i].value == "1959" && radio[i].checked == true) { 
+						selection = true; 
+					} //end if statement 
+				} //end for loop 
+				if(selection == true) {
+					message = message + "<b><p style='color:green'>Way to go!</p></b>"; 
+				} else { 
+					message = message + "<b><p style='color:red'>Try again my friend.</p></b>";
+				}
+				document.getElementById("response").innerHTML = message;
+			} //end function answer
+		</script>
+
+	</head> 
+
+	<body id="background"> 
+		<!-- <header><img id="bgimage" src="https://freedesignfile.com/upload/2015/01/White-lace-seamless-pattern-background-vector.jpg" /> -->
+
+		<!-- Click on header text confirm click and takes you to amazon website -->
+		<a href="http://amazon.com" onclick="return banner()">
+			<header> The Place where dolls go to shop </header>
+		</a>
+
+		<!-- Navigation Menu Bar -->
+		 <nav> 
+			<ul id="navmenu">
+				<li class="navitem"> <a href="index.html"> Home </a></li>
+				<li class="navitem"> <a href="shopp.html"> Store </a></li>
+				<li class="navitem"> <a href="info.html"> Info </a></li>
+			</ul>
+		</nav> 
+
+		<h1 style="text-align:center"> Lace 'N Charm </h1>
+		<audio width="400" height="220" controls autoplay>
+				<source src="brandenburg.mp3" type="audio/mpeg">
+				Your browser does not support HTML 5 audio.
+		</audio> 
+
+		<p> Tired of the boring clothes for your 11-1/2 inch doll sold in the store?  Well, add a little <span class="wrap-text"> charm </span> to your doll's clothes with <i>hand-made</i> crochet <b>Victorian outfits.</b> You will just adore these creations.  They will be great for <u>showing off</u> in your display case.  Each outfit comes with the following:
+		</p>
+
+		<!-- left side of screen -->
+		<div id="leftside">		<!-- music Brandenburg -->
+
+			<div class="wrap-list"> 
+				<ol>
+					<li class="listitem"> Dress </li>
+					<li class="listitem"> Undergarments </li>
+					<li class="listitem"> Hat </li>
+					<li class="listitem"> Parasol </li>
+					<li class="listitem"> Shoes </li>
+					<li class="listitem"> Personal Charm </li>
+				</ol>
+			</div>
+			<img id="image" src="https://d3h6k4kfl8m9p0.cloudfront.net/stories/Z3msL-kJMSDlZXFRDvJVOA-smallw.jpg" />
+
+		</div>
+
+	<!-- put trivia question on right side of screen -->
+		<div id="rightside">	
+			<!-- Trivia Question --> 
+			<div class="wrap-trivia"> 
+				<h1 style="text-align:center"> Doll Trivia Question </h1>
+				<p class="para1"> <i>What year did Mattel introduce the first Barbie Doll? </i></p>
+				<form>
+					<div id="response"> </div>
+					<input type="radio" name="TRIVIA" value="1962"> 1962 <br>
+					<input type="radio" name="TRIVIA" value="1959"> 1959 <br>
+					<input type="radio" name="TRIVIA" value="1969"> 1969 <br>
+					<input type="radio" name="TRIVIA" value="1955"> 1955 <br>
+					<input type="button" value="submit" id="button" onclick="answer()"> <br>
+				</form>
+			</div>
+			<img src="https://i.ebayimg.com/images/g/~~MAAOxyDEVSbWvj/s-l400.jpg" />
+		</div>
+
+		<!-- Clear out floats -->
+		<div class="clearfloat"> </div?
+
+
+		<hr>
+
+		<!-- Youtube video -->
+		<p> How to repair your dolls hair </P>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/pH6SkBpCg78" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+		<center> Kikichan <a href="http://www.paradisedolls.com/">My Favorite Website</a> </center>
+		<footer> Created by Kikichan</footer>
+	</body> 
+</html>
