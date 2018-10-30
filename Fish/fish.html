@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Fish Game! </title>
+		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+
+		<script>
+		function start(){
+		  // create background
+			sjs.open("target", 800, 500);
+			var background = new sjs.Image("Images/space7.png");
+			background.setSize(sjs.getWidth(), sjs.getHeight());
+
+			//Background Music
+			var playM = new Audio('Music/mad_robots.mp3');
+			var toggle = true;
+			var musicOn = false;
+			// display music instructions for 2 seconds
+			var music_text = new sjs.Text("press space bar to toggle music.",28,"#ff0");
+			music_text.centerH().offset(0, 30);
+			setTimeout(function(){
+				music_text.destroy();
+			}, 2000); 
+			sjs.keyDown(SPACE_KEY, function(){
+				if(toggle == true){ 
+					if(musicOn == false){
+						playM.play();
+						musicOn = true;
+					} else {
+						playM.pause();
+						musicOn = false;
+					} 
+					toggle = false;
+					setTimeout(function(){
+						toggle = true; 
+					},1000);
+				} //end if toggle statement
+			}); //end keyDown function 
+
+		  // Player properties
+			var player = new sjs.Image("Images/flash_left.png");
+			player.type = "player";
+			player.setSize(100,50);	
+			player.friction = .3;
+			player.accel = .5; 
+
+			//Move Player right on right arrow key and change image right
+			sjs.keyDown(RIGHT_KEY, function(){ 
+				player.setImage("Images/flash_right.png");
+				player.pushRight();
+			}); 
+
+			//Move Player left on left arrow key and change image left
+			sjs.keyDown(LEFT_KEY, function(){ 
+				player.setImage("Images/flash_left.png");
+				player.pushLeft();
+			}); 
+
+			//Move player up on up arrow
+			sjs.keyDown(UP_KEY, function(){ 
+				player.pushUp();
+			}); 
+
+			//Move player down on down arrow
+			sjs.keyDown(DOWN_KEY, function(){ 
+				player.pushDown();
+			}); 
+
+			//Powerups
+			  //Put up crumbs in random locations every 5 seconds
+				setInterval(function(){ 
+					var x = Math.floor(Math.random() * 783);
+					var y = Math.floor(Math.random() * 470); 
+					var powerUp = new sjs.Image("Images/powerup.png");
+					powerUp.type = "powerUp";
+					powerUp.setGravity();
+					powerUp.setSize(60,100);
+					powerUp.noBounds = true;
+					powerUp.moveTo(x, y);
+					powerUp.friction = .5;
+				}, 5000);
+			sjs.onHit("powerUp","bottom_screen",function(x,y){
+				x.destroy();
+			});
+
+			// boosts on hitting a powerup
+			sjs.onHit("player","powerUp",function(x,y){
+				x.grow(60,30); 		// grow 
+				setTimeout(function(){
+					x.grow(-60,-30);
+				}, 4000); 		    // but not too long
+				y.destroy();
+			}); 
+
+			//WATCH OUT ENEMIES!! New one every second
+			setInterval(function(){ 
+				var speed = Math.round(1 + Math.random()*10);
+				
+				if (Math.random() > 0.5) {
+					var enemy = new sjs.Image("Images/green_right.png");	// right facing enemy
+					enemy.type = "enemy";
+					enemy.setSize(100,50);
+					enemy.noBounds = true;
+					//enemy.moveTo(x, y);
+					enemy.friction = 0;
+					enemy.pushRight(speed);
+					// randomize enemies starting position and scale size
+					enemy.scaleSize(.5 + Math.random() * 1.2);
+					enemy.moveTo(-enemy.getWidth(), Math.random()*(enemy.getClamp().y));
+
+				}	else {
+						var enemy = new sjs.Image("Images/green_left.png");  // keft facing enemy
+						enemy.type = "enemy";
+						enemy.setSize(100,50);
+						enemy.noBounds = true;
+						enemy.friction = 0;
+						enemy.pushLeft(speed); 
+						enemy.scaleSize(.5 + Math.random() * 1.2);
+						enemy.moveTo(sjs.getWidth(), Math.random()*(enemy.getClamp().y)); 
+				}
+					
+			}, 1000);
+			sjs.left_screen.offset(-500);		// create enemy off screen
+			sjs.right_screen.offset(500);
+
+			// destroy enemy if it hits the right or left side of screen
+			sjs.onHit("enemy",["right_screen","left_screen"], function(x,y){
+				x.destroy(); 
+			}); 
+
+			//Score
+			var score = 0;
+			var score_txt = new sjs.Text("Score: 0", 21, "orange");
+
+			// destroy enemy if it hits the player
+			sjs.onHit("player","enemy", function(x,y){ 
+
+				// if the player is bigger than the enemy then player grows bigger onhit
+				if(x.getWidth() > y.getWidth() && x.getHeight() > y.getHeight()) {
+					score = score + 1;
+					score_txt.setText("Score: "+score);
+					localStorage.setItem("score", score);	// global variable for browser
+					x.grow(10,5);
+					if(score >= 20){ 	// if score reaches 20 them display win screen
+						window.location = "win.html";
+					}
+
+				// otherwise destroy the player
+				} else {
+					x.destroy();
+					window.location = "gameover.html"; 
+				}
+				y.destroy();	//destroy the enemy
+			}); 
+
+		} //end start
+		</script>
+
+	</head>
+	<body onload="start()">
+		<h1> Fish Game! </h1>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>
