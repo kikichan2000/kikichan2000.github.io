@@ -1,0 +1,343 @@
+<html>
+	<head>
+		<title> Cheeseopolis Design </title>
+		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+		<script>
+
+		// Module designs the planet Cheeseopolis: mice, rats, Disco, cheese powerups etc.  All positions of these objects will be stored in a global variable level.  The 'SHOW'button will show the object positions and will need to be copied and placed into cheeseopolis.html for the game.
+			var level = [];
+
+			function start(){
+				sjs.open("target",800,500);		// set player window size
+
+				// set planet background and size of background
+				var background = new sjs.Image("Images/Cheeseopolis.png");
+				background.setSize(1500, 500);
+
+				// add a test button to test created level
+				var testBtn = new sjs.Button("Test", function(){
+					// store everthing in the global array
+					localStorage.setItem('level', sjs.saveImageArray(level)); 
+					window.open('cheeseopolis.html', '_blank');	// open a new tab to test your level
+				}); 
+
+				// add a show button to test created level use div tag output from html body sec.
+				var showBtn = new sjs.Button("Show", function(){
+					var output = document.querySelector("#output"); 
+					output.innerHTML = sjs.saveImageArray(level);  // save everything from level 	
+				}); 
+				showBtn.offset(75, 0);	// offset from Test button
+
+				//Now put Disco's Spaceship on the planet
+				var discoShip = new sjs.Image("Images/shipLanded.png");
+				discoShip.type = "ship"; 
+				discoShip.setSize(150,135);
+				discoShip.bottom().offset(0,1); 
+				
+				//Setup Disco Player properties 
+				var disco = new sjs.Image("Images/idleDisco.png");
+				disco.type = "disco";
+				disco.setSize(68,70); // size of player
+				disco.setGravity(3);	// set gravity of the player
+				disco.bottom();		// start player at the bottom of the screen
+				disco.friction = .3;  // how fast the player can move
+				disco.noBounds = true; 
+				sjs.scrollable(disco,background);  //scroll the background with the player
+
+				//Disco player movement array right and left facing
+				var r_d_images = ["Images/walkingDisco-12.png", "Images/walkingDisco-13.png", "Images/walkingDisco-1.png", "Images/walkingDisco-2.png", "Images/walkingDisco-3.png", "Images/walkingDisco-4.png", "Images/walkingDisco-5.png", "Images/walkingDisco-6.png", "Images/walkingDisco-7.png", "Images/walkingDisco-8.png", "Images/walkingDisco-9.png", "Images/walkingDisco-10.png", "Images/walkingDisco-11.png"];
+				var l_d_images = ["Images/l-walkingDisco-12.png", "Images/l-walkingDisco-13.png", "Images/l-walkingDisco-1.png", "Images/l-walkingDisco-2.png", "Images/l-walkingDisco-3.png", "Images/l-walkingDisco-4.png", "Images/l-walkingDisco-5.png", "Images/l-walkingDisco-6.png", "Images/l-walkingDisco-7.png", "Images/l-walkingDisco-8.png", "Images/l-walkingDisco-9.png", "Images/l-walkingDisco-10.png", "Images/l-walkingDisco-11.png"];
+
+				var r_discoPos = 0;				// tracking var for Disco's right movements in array
+				var l_discoPos = 0;				// tracking var for Disco's left movements in array
+				var r_facing = true;		// Disco starts right facing
+				
+				
+// *******************************************************************
+// ********************** KEY DOWN FUNCTIONS *************************
+				sjs.keyDown(RIGHT_KEY, function(){	//change spacemen facing to right on ">" key
+					r_facing = true;
+					l_facing = false;
+					//disco.bottom().offset(0,0);
+					disco.pushRight(2);		// puah player in the right direction
+					disco.setSize(85,85);
+
+					if(r_discoPos <= 12) {	// if within bounds of array then display image
+					  disco.setImage(r_d_images[r_discoPos]);
+					  
+					}
+					if(r_discoPos == 12){		// range of array is 0 to 12 (13 imgs) reset to 0 if at last 
+						r_discoPos = 0;
+					}
+					if(r_discoPos >= 13){		// if jumping displau jumping Disco
+						disco.setImage("Images/walkingDisco-12.png");
+						r_discoPos = 0;
+					} 
+					r_discoPos = r_discoPos + 1; // Update tracking position in array
+				}); //end Right key 
+
+				sjs.keyDown(LEFT_KEY, function(){		// change spacemen facing to left "<" key
+					l_facing = true;
+					r_facing = false;
+					//disco.bottom().offset(0,0);
+					disco.pushLeft(2);		// puah player in the right direction
+					disco.setSize(85,93);
+					if(l_discoPos <= 12) {	// if within bounds of array then display image
+					  disco.setImage(l_d_images[l_discoPos]);
+					  
+					}
+					if(l_discoPos == 12){		// range of array is 0 to 12 (13 imgs) reset to 0 if at last 
+						l_discoPos = 0;
+					}
+					if(l_discoPos >= 13){		// if jumping displau jumping Disco
+						disco.setImage("Images/l-walkingDisco-12");
+					} 
+					l_discoPos = l_discoPos + 1;
+				}); //end Left key 
+
+				//Jumping Code
+				var canJump = true;
+				sjs.keyDown(UP_KEY, function(){
+					if(canJump == true){	// if player can jump then push player up
+						canJump = false;
+						disco.pushUp(55); 	// 55 how high player jumps
+						//disco.setSize(90,108);
+						if(r_facing == true){  // if right facing use right jump figure
+							disco.pushRight(2);
+							disco.setImage("Images/r-jumpingDisco.png");					
+							r_discoPos = 0;
+						} else { 
+							disco.pushLeft(2);
+							disco.setImage("Images/l-jumpingDisco.png");   // otherwise use left jump figure
+							l_discoPos = 0;
+						} 
+					} //end if statement
+				}); //end keyDown function 
+
+				// ***********************************************
+				//  ******** EVENT LISTENER for key presses*******
+				window.addEventListener("keyup", function(e){
+					if(e.keyCode == RIGHT_KEY){
+						disco.setImage("Images/walkingDisco-12.png");
+						r_discoPos = 0;
+					} else if (e.keyCode == LEFT_KEY){
+						disco.setImage("Images/l-walkingDisco-12.png");
+						l_discoPos = 0;
+					} //endif statement
+
+				}); //end EventListener function
+
+				//*******************************************************
+				//*****************onHit CODE ***************************
+
+					// test to see if disco hit the mountain.  Remember x is player, y is location
+				sjs.onHit("disco","mountain", function(x,y){
+					sjs.stoppedBy(x,y);		// then stop the disco on the mountain
+					// if the player is below the platform allow him to walk under the platform
+					//  but not to jump onto it.
+					if (canJump == false && x.y < y.y-85){ 
+						canJump = true;
+						//if (r_facing == true){
+						//	disco.setImage(r_d_images[r_discoPos]"Images/l-walkingDisco-12.png");
+						//}
+						r_discoPos = 0;
+						l_discoPos = 0;
+					}
+				});
+
+
+				// if the disco  hits the bottom of the screen
+				sjs.onHit("disco","bottom_screen",function(x,y){
+					sjs.stoppedBy(x,y);		// then stop the disco from going off the screen bottom
+					if(canJump == false){	// if disco cannot jump reset the array tracking
+						canJump = true;
+						r_discoPos = 0;
+						l_discoPos = 0;
+						if (r_facing == true){
+							disco.setImage(r_d_images[r_discoPos]);
+						} else{
+							disco.setImage(l_d_images[l_discoPos]);
+						}
+					}
+				}); 
+
+				// if disco hits the left, right, top then stop the her from going off screen
+				sjs.onHit("disco",["right_screen","left_screen","top_screen"],function(x,y){
+					sjs.stoppedBy(x,y); 
+				}); 
+
+				// test to see if the rat is on the bottom of the screen and stop him
+				sjs.onHit("rat","bottom_screen", function(x,y){
+					sjs.stoppedBy(x,y);
+				});
+
+				// test to see if the rat hit the left or right side of the window,bounce him, and change direction
+				sjs.onHit("rat",["left_screen","right_screen"], function(x,y){
+					sjs.bounceOff(x,y);
+				}); 
+
+				// if any of the created objects are put on the trash object then destroy them
+				sjs.onHit("trash",["mountain","cheese", "rat", "catnip", "ratShip","mouseCage","cageKey", "mouse","ratStanding"],
+				function(x,y){
+					y.destroy();
+					sjs.removeFromArray(level,y);
+				}); 
+
+				//create trash object for disgarding other objects
+				var trash = new sjs.Text("Trash",15,"orange");
+				trash.type = "trash";
+				trash.moveTo(720,10);
+				trash.fixed = true;
+				trash.setHeight(60);
+				trash.node.style.background = "green";
+				trash.node.style.borderTop = "4px solid yellow";
+			}  // end start
+
+
+				//****************************************************************************
+				//******************** FUNCTIONS ********************************************
+
+			// Mountain Function.  Create a mountains in the game window
+			function mountain(){
+					var mountain = new sjs.Image("Images/mountain1.png");
+					level.push(mountain);		// save in global array
+					mountain.type = "mountain"; 
+					mountain.setHeight(60); //30
+					mountain.center().offset(-sjs.gx,10); //10
+					mountain.onMouseDown(function(){	// allow user to move platform anywhere in win
+						mountain.draggable();
+						mountain.follow(sjs.mouse);
+					});
+			}	// end mountain
+
+			function cheese(){
+					var cheese = new sjs.Image("Images/cheese.png");
+					level.push(cheese);		// save in global array
+					cheese.type = "cheese"; 
+					cheese.setHeight(30); //30
+					cheese.center().offset(-sjs.gx,10); //10
+					cheese.onMouseDown(function(){	// allow user to move platform anywhere in win
+						cheese.draggable();
+						cheese.follow(sjs.mouse);
+					});
+			}  // end cheese
+
+			function ratShip(){
+					var ratShip = new sjs.Image("Images/ratShip.png");
+					level.push(ratShip);
+					ratShip.type = "ratShip"; 
+					ratShip.setHeight(50);
+					ratShip.setWidth(70); //30
+					ratShip.center().offset(-sjs.gx,10); //10
+					ratShip.onMouseDown(function(){	// allow user to move platform anywhere in win
+						ratShip.draggable();
+						ratShip.follow(sjs.mouse);
+					});
+			}  // end ratShip
+
+			function rat(){
+					var rat = new sjs.Image("Images/l_rat.gif");
+					level.push(rat);
+					rat.type = "rat"; 
+					rat.setHeight(30); //30
+					rat.center().offset(-sjs.gx,10); //10
+					rat.friction = 0; 
+				  rat.noBounds = true; 
+				  rat.setHFlipImages("Images/l_rat.gif","Images/r_rat.gif");
+				  rat.onMouseDown(function(){		// follow mouse
+						rat.follow(sjs.mouse);
+						rat.removeGravity();
+						rat.stop();
+					});					
+					rat.onMouseUp(function(){			// unfollow mouse
+						rat.unfollow(sjs.mouse);
+						rat.setGravity(0);
+						rat.pushHFacing();
+						rat.accel=.5;
+					});
+			}  // end rat
+
+			function catnip(){
+					var catnip = new sjs.Image("Images/catnip.png");
+					level.push(catnip);		// save in global array
+					catnip.type = "catnip";
+					catnip.setSize(20,20);
+					catnip.center().offset(-sjs.gx,10); //10
+					catnip.onMouseDown(function(){	// allow user to move platform anywhere in win
+						catnip.draggable();
+						catnip.follow(sjs.mouse);
+					});
+			}  // end catnip
+
+			function mouseCage(){
+					var mouseCage = new sjs.Image("Images/mouseCage.png");
+					level.push(mouseCage);		// save in global array
+					mouseCage.type = "mouseCage";
+					mouseCage.setSize(90,85);
+					mouseCage.center().offset(-sjs.gx,10); //10
+					mouseCage.onMouseDown(function(){	// allow user to move platform anywhere in win
+						mouseCage.draggable();
+						mouseCage.follow(sjs.mouse);
+					});
+			}  // end mouseCage
+
+			function cageKey(){
+					var cageKey = new sjs.Image("Images/cageKey.png");
+					level.push(cageKey);		// save in global array
+					cageKey.type = "cageKey";
+					cageKey.setSize(50,30);
+					cageKey.center().offset(-sjs.gx,10); //10
+					cageKey.onMouseDown(function(){	// allow user to move platform anywhere in win
+						cageKey.draggable();
+						cageKey.follow(sjs.mouse);
+					});
+			}  // end cageKey
+
+			function mouse(){
+					var mouse = new sjs.Image("Images/mouse.png");
+					level.push(mouse);		// save in global array
+					mouse.type = "mouse";
+					mouse.setSize(50,40);
+					mouse.center().offset(-sjs.gx,10); //10
+					mouse.onMouseDown(function(){	// allow user to move platform anywhere in win
+						mouse.draggable();
+						mouse.follow(sjs.mouse);
+					});
+			}  // end mouse
+
+			function ratStanding(){
+					var ratStanding = new sjs.Image("Images/ratStanding.png");
+					level.push(ratStanding);		// save in global array
+					ratStanding.type = "ratStanding";
+					ratStanding.setSize(50,60);	//w,h
+					ratStanding.center().offset(-sjs.gx,10); //10
+					ratStanding.onMouseDown(function(){	// allow user to move platform anywhere in win
+						ratStanding.draggable();
+						ratStanding.follow(sjs.mouse);
+					});
+			}  // end ratStanding
+
+		</script>
+	</head>
+
+	<body onload="start()">
+		<h1> Cheeseopolis Design </h1>
+		<center>
+			<input type="image" src="Images/mountain1.png" onclick="mountain()">
+			<input type="image" src="Images/cheese.png" height=30 width=50 onclick="cheese()">
+			<input type="image" src="Images/l_rat.gif" height=30 width=50 onclick="rat()">
+			<input type="image" src="Images/catnip.png" height=20 width=20 onclick="catnip()">
+			<input type="image" src="Images/ratShip.png" height=30 width=50 onclick="ratShip()">
+			<input type="image" src="Images/mouseCage.png" height=40 width=40 onclick="mouseCage()">
+			<input type="image" src="Images/cageKey.png" height=20 width=50 onclick="cageKey()">
+			<input type="image" src="Images/mouse.png" height=30 width=50 onclick="mouse()">
+			<input type="image" src="Images/ratStanding.png" height=60 width=40 onclick="ratStanding()">
+ 		</center>
+
+ 		<div id="target" style="margin:auto;background:grey;"></div>
+ 		<!--  create a section under the game window -->
+		<br/>
+		<div id="output" style="margin:0 50 0 50;"></div>
+		<br/><br/> 
+	</body>
+</html>

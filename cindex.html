@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Menu </title>
+		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+		<script>
+			var returnPressed = false;
+
+			function playMusic(){
+				//var playM = new Audio('Music/alert09.mp3');
+				var playM = new Audio('Music/Celestial Soda Pop.mp3');
+				 //Background Music.  Use 'm' to toggle music on and off
+				var toggle = true;
+				var musicOn = false;
+				sjs.keyDown(M_KEY, function(){
+					if(toggle == true){ 
+						if(musicOn == false){
+							playM.play();
+							musicOn = true;
+						} else {
+							playM.pause();
+							musicOn = false;
+						}  // end musicOn
+						toggle = false;
+						setTimeout(function(){
+							toggle = true; 
+						},1000); 
+					} //end if toggle statement 
+				}); //end keyDown function 
+		 	}  // end playMusic
+
+		 function mission(){
+		 	if (returnPressed == false ){
+				var shipAlert = new sjs.Image("Images/shipAlert.gif");
+				 shipAlert.setSize(800, 500);
+				 var playM = new Audio('Music/alert09.mp3');
+				 playM.play();
+
+				 setTimeout(function(){
+				  	var output_text = new sjs.Text("Disco: On screen", 28, "white");
+						output_text.center().offset(0,200);
+				 }, 1000); 
+
+				 // After 2 seconds of ship alert sounding, display Admiral Keiko and mission
+				 setTimeout(function(){					  	
+				  	var keiko = new sjs.Image("Images/Keiko.gif");
+						keiko.type = "keiko"; 
+				 		keiko.setSize(85,65);
+				 		keiko.center().offset(0,65); 
+						keiko.setImage("Images/Keiko.gif");
+				  	var output1_text = new sjs.Text("Admiral Keiko: Captain Disco, It has come to our attention that Ratamia has been illegaly mining cheese on Cheeseopolis.  Your mission is to stop them by any means possible.", 28, "white");
+						output1_text.centerH().offset(0,60);	
+	
+					}, 2000);
+
+					window.addEventListener("keyup", function(e){		// wait for enter key to be pressed
+						if (e.keyCode == 13){
+							returnPressed = true;
+							window.location = "movie.html";
+						}
+					}); //end EventListener function
+				} // returnPressed
+			} //end mission
+
+			var output_text;
+			function controls(){
+				
+				output_text = new sjs.Text("> key:  Moves right", 28, "white");
+				output_text.center().offset(11,-150);
+				output_text = new sjs.Text("< key:  Moves left", 28, "white");
+				output_text.center().offset(3, -125);
+				output_text = new sjs.Text("^ key:  Jumps up", 28, "white");
+				output_text.center().offset(2, -100);
+				output_text = new sjs.Text("space bar:  Shoots laser but only in powerup mode", 28, "white");
+				output_text.center().offset(-10, -75);
+				output_text = new sjs.Text("m key:  Toggles Music", 28, "white");
+				output_text.center().offset(11,-45);
+			}  // end controls
+
+			function rules(){
+				output_text = new sjs.Text("Mission Objective: To rid the planet Cheeseopolis of the cheese-stealing rat menace and free the captive mice.  You must kill the rats, find the key to mice cage, free the mice and destroy the rat ship before it takes off in 5 minutes.", 28, "white")
+				output_text.center().offset(0, 165);
+			}  // end rules
+
+			function start(){
+				// set up star background and size
+				sjs.open("target",800,500);		// target window size
+				var background = new sjs.Image("Images/starsBackground.png");
+				background.setSize(800, 500);
+
+
+				playMusic();
+				
+				// Display Title
+				var menu_text = new sjs.Text("Disco's Space Adventures", 40, "blue");
+				menu_text.centerH();
+				var menu_text = new sjs.Text("The Rat Menace", 28, "red");
+				menu_text.centerH().offset(0,40);
+
+				// Menu buttons
+				var controlBtn = new sjs.Button("Controls", function(){
+					controls();
+				});
+				controlBtn.center();
+
+				var rulesBtn = new sjs.Button("Rules", function(){
+					rules();
+				});
+				rulesBtn.center().offset(0,50);  // 50 pixels down
+
+				var level1Btn = new sjs.Button("Mission 1", function(){
+						mission();
+				}); // level1Btn				
+				level1Btn.center().offset(0,100);  // 50 pixels down
+
+				var info_text = new sjs.Text("Created By Shirley Zarbock", 20, "yellow");
+				info_text.bottom().centerH();
+			}
+		</script>
+	</head>
+
+	<body onload="start()">
+		<h1> Custom Game </h1>
+	<!--	<audio controls autoplay>
+
+				<source src="Music/Celestial Soda Pop.mp3" type="audio/mpeg">
+				Your browser does not support HTML 5 audio.
+		</audio> -->
+		
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>

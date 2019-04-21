@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Movie </title>
+		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+		<script>
+		
+//			function start(){
+				
+
+//				var background = new sjs.Image("Images/starsBackground.png");
+//				background.setSize(1500, 500);
+				// Display planet Catopia
+//				var catopia = new sjs.Image("Images/Catopia.png");
+//				catopia.type = "catPlanet";
+//				catopia.setSize(100,93);
+//				catopia.bottom().offset(20,-50);
+
+				// Display planet Cheeseopolis
+//				var cheeseopolis = new sjs.Image("Images/planet-cheese.png");		
+//				cheeseopolis.type = "cheesePlanet";
+//				cheeseopolis.setSize(100,93);
+//				cheeseopolis.centerH().offset(300,70);
+
+
+	
+//**********************************************************************
+//***************** GLOBAL VARIABLES ***********************************
+				var ship_images = ["Images/shipFlying-1.png", "Images/shipFlying-2.png", "Images/shipFlying-3.png", "Images/shipFlying-4.png", "Images/shipFlying-5.png", "Images/shipFlying-6.png", "Images/shipLanded.png"];
+				var shipTrack = 0;
+
+						
+
+//***********************************************************************
+//************ Fly ship to Cheeseopolis ********************************				
+				var shipTrack = 0;
+				var x_shipPos = 0;	
+				var y_shipPos = -50;
+				var okToFly = true;
+				var loop = 0;
+				var howManyTimes = 11;
+				var IDvalue = 0;
+
+				
+
+
+//*******************************************************
+//****** Now land ship on planet Cheeseopolis ***********
+				var shipTrack1 = 0;
+				var x_shipPos1 = 0;			
+				var y_shipPos1 = -450;	
+				var loop1 = 0;
+				var howManyTimes1 = 8;
+	
+
+				function shipLanding(){
+					if (okToFly == false) {
+						if (loop1 == 0) {		// first time through put up Cheeseopolis background
+							var p_background = new sjs.Image("Images/Cheeseopolis.png");
+						   p_background.setSize(1500, 500);
+						   discoShip.setSize(105,90);
+						}
+					  discoShip.bottom().left().offset(x_shipPos1,y_shipPos1);  // ship descent position
+					  discoShip.setImage(ship_images[shipTrack1]);
+					  y_shipPos1 = y_shipPos1 + 50;
+					  loop1++;
+					  if (loop1 > howManyTimes1) {	// if landed on planet then stop descent, display landed ship 
+							discoShip.setImage(ship_images[6]);
+							okToFly = true;
+							clearInterval(IDvalue1);
+//							setTimeout(function(){
+//							  window.location = "cheeseopolis.html";}, 1000);   // Go to level1
+							
+							
+					  }  // end if
+					} // end if okToFly
+				}	// end shipLanding
+
+//var discoShip = new sjs.Image("Images/shipFlying-1.png");				
+//**********************************************************************
+//************Mission Directive Given ***********************************
+//			Now put Disco's Spaceship blasting off
+//				var IDvalue2 = setInterval(mission, 9000);
+//				var timeValue = 0;
+
+				function mission(){
+
+//					IDvalue = setInterval(shipFlying, 0700);		
+					function shipFlying(discoShip) {
+	debugger;
+						if (loop ==0) {
+							//Ship.setImages(ship_images[0]);
+						}   
+						
+						if (loop < 4) {							// first ship img just go straight up 4 iterations
+							x_shipPos = x_shipPos;
+							y_shipPos = y_shipPos - 50;
+							discoShip.setSize(75,60);
+				  	}
+						if ((loop>=4) && (loop<7)){	// second ship img move across screen & up 3 iterations
+							x_shipPos = x_shipPos + 20;
+							y_shipPos = y_shipPos - 50;
+							shipTrack = 1;
+							discoShip.setSize(70,55);
+						}
+					
+						if (loop==7){ 							// third ship img move across screen & up some 1 iteration
+							x_shipPos = x_shipPos + 60;
+							y_shipPos = y_shipPos - 30;
+							shipTrack = 2;
+							discoShip.setSize(90,75);
+						}
+
+						if (loop == 8) { 					// fourth ship img move ship across and up a bit 1 iteration
+							x_shipPos = x_shipPos + 30;
+							y_shipPos = y_shipPos-30;
+							shipTrack = 3;
+							discoShip.setSize(45,30);
+						}
+
+						if ((loop>=9) && (loop <11)){ // fifth ship img start descent 2 iterations
+							x_shipPos = x_shipPos - 35;
+							y_shipPos = y_shipPos + 50;
+							shipTrack = 4;
+							discoShip.setSize(65,50);
+						}
+				  	discoShip.bottom().offset(x_shipPos,y_shipPos);
+    				discoShip.setImage(ship_images[shipTrack]);
+    				loop++;
+debugger;
+    				sjs.onHit("ship","cheesePlanet", function(x,y){		// if ship reached planet then time to land
+							okToFly = false;
+							debugger;
+							clearInterval(IDvalue);
+						
+						});  // end onHit
+   				 
+					}  // end shipflying;
+
+
+					sjs.open("target",800,500);		// set player window size
+				  var shipAlert = new sjs.Image("Images/shipAlert.gif");
+				  shipAlert.setSize(800, 500);
+//					if (okToFly == false) {
+//						if (loop1 == 0) {		// first time through put up Cheeseopolis background
+//					var shipAlert = new sjs.Image("Images/shipAlert.gif");
+//					shipAlert.setSize(800, 500);
+					setTimeout(function(){
+		//				var mission = new sjs.Image("Images/mission.png");
+		//				mission.type = "mission";
+		//			  mission.setSize(700, 500);
+		//			  mission.center().offset(0,0);
+		//			  mission.setImage("Images/mission.png");
+					 var output = document.querySelector("#output");
+					 output.innerHTML = "Captain Disco, It has come to our attention that Ratamia has been illegaly mining cheese on Cheeseopolis.  Your mission is to stop them by any means possible"
+						var keiko = new sjs.Image("Images/Keiko.gif");
+						keiko.type = "keiko"; 
+				 		keiko.setSize(85,65);
+				 		keiko.center().offset(0,65); 
+						keiko.setImage("Images/Keiko.gif");
+						//clearTimeout(timeValue);
+					}, 2000);
+					setTimeout(function() {
+						var background = new sjs.Image("Images/starsBackground.png");
+						background.setSize(1500, 500);
+						// Display planet Catopia
+						var catopia = new sjs.Image("Images/Catopia.png");
+						catopia.type = "catPlanet";
+						catopia.setSize(100,93);
+						catopia.bottom().offset(20,-50);
+
+						// Display planet Cheeseopolis
+						var cheeseopolis = new sjs.Image("Images/planet-cheese.png");		
+						cheeseopolis.type = "cheesePlanet";
+						cheeseopolis.setSize(100,93);
+						cheeseopolis.centerH().offset(300,70);
+						//			Now put Disco's Spaceship blasting off
+						//			Now put Disco's Spaceship blasting off
+				
+//						debugger;
+//						shipFlying(discoShip);
+//						IDvalue = setInterval(shipFlying(), 0700);
+//						debugger;
+						//			Now put Disco's Spaceship blasting off
+//						var discoShip = new sjs.Image("Images/shipFlying-1.png");
+//						discoShip.type = "ship"; 
+//						discoShip.setSize(75,60);
+//						discoShip.bottom().offset(40,-100); 
+	
+					}, 5000);
+					
+					var discoShip = new sjs.Image("Images/shipFlying-1.png");
+				discoShip.type = "ship"; 
+				discoShip.setSize(75,60);
+				discoShip.bottom().offset(40,-100); 
+				var IDvalue1 = setInterval(shipLanding, 1000);
+				debugger;
+					//shipFlying(discoShip);
+					//clearTimeout(timeValue);
+//					clearInterval(IDvalue2);
+
+				} // end mission
+						 
+
+
+
+			 //mission();
+//			}  // end start
+		</script>
+	</head>
+
+	<body onload="mission()">
+		<h1> Destination Cheeseopolis </h1>
+		<script mission() defer> </script>
+		
+		<div id="target" style="margin:auto;background:grey;"></div>
+		<!--  create a section under the movie window for text-->
+		<br/>
+		<div id="output" style="margin:0 50 5 250;"></div>
+		<br/><br/>
+	</body>
+</html>

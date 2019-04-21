@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Win </title>
+		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+		<script>
+
+			function start(){
+				sjs.open("target",800,500);		// set window size
+				var background = new sjs.Image("Images/Cheeseopolis.png");
+				background.setSize(800, 500);
+
+				
+				var mouseCage = new sjs.Image("Images/mouseCageOpened.png");
+				mouseCage.type = "mouseCage";
+				mouseCage.setSize(300,270);
+				mouseCage.center().offset(0,10);
+				var cageDoor= new sjs.Image("Images/cageDoor.png");
+				cageDoor.type = "cageDoor";
+				cageDoor.setSize(220,240);
+				cageDoor.center().offset(-50,40); 
+				var cageKey = new sjs.Image("Images/l-cageKey.png");
+				cageKey.type = "cageKey";
+				cageKey.center().offset(300,35);
+
+				//***************************************************************************
+				//*Play movie of key opening mouse cage door
+				var loop = 0;
+				var howManyTimes = 7;
+				var x = 700;
+				var IDvalue = setInterval(openDoor, 0700);
+				function openDoor(){
+					cageKey.moveTo(x,285);
+					cageKey.setImage("Images/l-cageKey.png");
+					//cageKey.center().right().offset(x,10);
+					x = x - 50;
+					loop++;
+					debugger;
+					if (loop == howManyTimes){
+						cageKey.moveTo(x+50,285);
+						cageKey.setImage("Images/l-cageKey.gif");
+						clearInterval(IDvalue)
+					}
+				}	// end openDoor
+
+				setTimeout(function(){		// need to set a 5 sec timer so movie doesn't overwrite end	
+					sjs.onHit("cageDoor", "cageKey",function(x,y){	// key in lock erase door and key
+						x.destroy();
+						y.destroy();
+					});
+					//var mouseCage = new sjs.Image("Images/mouseCageOpened.png");
+				//	mouseCage.type = "mouseCage";
+				//	mouseCage.setSize(300,270);
+				//	mouseCage.center().offset(-sjs.gx,10);
+					var mouse = new sjs.Image("Images/mouse.png");
+					mouse.setSize(100,90);
+					mouse.center().offset(-20,150);
+					mouse.setImage("Images/mouse.png");
+					var output_text = new sjs.Text("Thank you for saving us.  Please take this cheese as a token of our appreciation.", 28, "white")
+					output_text.center().offset(0, 195);
+					var win_txt = new sjs.Text("MISSION 1 COMPLETE!", 44, "orange");
+					win_txt.centerH().offset(0,0);
+				
+				}, 4000);  // timeout
+				
+			
+			}  //end start
+		</script>
+	</head>
+
+	<body onload="start()">
+		<h1> You Win </h1>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>
