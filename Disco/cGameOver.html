@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Game Over </title>
+		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+		<script>
+			function start(){
+				sjs.open("target",800,500);		// set player window size
+				var background = new sjs.Image("Images/Cheeseopolis.png");
+				background.setSize(800, 500);
+
+				//			Now put Disco's Spaceship blasting off
+				var ratShip = new sjs.Image("Images/ratShip.png");
+				ratShip.type = "ratShip"; 
+				ratShip.setSize(75,60);
+				ratShip.bottom().offset(40,-100); 
+				
+//***********************************************************************
+//************ Fly ship to Cheeseopolis ********************************				
+
+				var x_shipPos = 0;	
+				var y_shipPos = -50;
+				var okToFly = true;
+				var loop = 0;
+				var howManyTimes = 11;
+				var IDvalue = 0;
+				IDvalue = setInterval(shipFlying, 0700);		//fly ship at 0700ms intervals until hits planet
+				function shipFlying() {
+					
+					if (loop < 4) {							// first ship img just go straight up 4 iterations
+						x_shipPos = x_shipPos;
+						y_shipPos = y_shipPos - 50;
+						ratShip.setSize(75,60);
+				  }
+					if ((loop>=4) && (loop<7)){	// second ship img move across screen & up 3 iterations
+						x_shipPos = x_shipPos + 20;
+						y_shipPos = y_shipPos - 50;
+						ratShip.setSize(70,55);
+					}
+					
+					if (loop==7){ 							// third ship img move across screen & up some 1 iteration
+						x_shipPos = x_shipPos + 60;
+						y_shipPos = y_shipPos - 30;
+						ratShip.setSize(90,75);
+					}
+
+					if (loop == 8) { 					// fourth ship img move ship across and up a bit 1 iteration
+						x_shipPos = x_shipPos + 30;
+						y_shipPos = y_shipPos-30;
+						ratShip.setSize(45,30);
+					}
+
+					if ((loop>=9) && (loop <11)){ // fifth ship img start descent 2 iterations
+						x_shipPos = x_shipPos - 35;
+						y_shipPos = y_shipPos + 50;
+						ratShip.setSize(65,50);
+					}
+					
+				  ratShip.bottom().offset(x_shipPos,y_shipPos);
+    			ratShip.setImage("Images/ratShip.png");
+    			loop++;
+
+    			if (loop == 13) {		// if ship reached planet then time to land
+						okToFly = false;
+						clearInterval(IDvalue);		// clear out interval timer so ship stops flying
+					}; 
+   				 
+				}  // end shipflying;
+
+				var gameover_txt = new sjs.Text("So Close!", 44, "orange");
+				gameover_txt.center().offset(0,-50);
+				var restartBtn = new sjs.Button("Try Again?", function(){
+				window.location = "index.html";
+				});
+				restartBtn.center();
+				var score_txt = new sjs.Text("Score: 0", 21, "orange");
+				score_txt.setText("Score: " +localStorage.getItem("score"));
+			}
+		</script>
+	</head>
+
+	<body onload="start()">
+		<h1> Rats Rule!!!! </h1>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>
