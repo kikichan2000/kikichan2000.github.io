@@ -7,7 +7,7 @@
 			var returnPressed = false;
 
 			function playMusic(){
-				//var playM = new Audio('Music/alert09.mp3');
+				
 				var playM = new Audio('Music/Celestial Soda Pop.mp3');
 				 //Background Music.  Use 'm' to toggle music on and off
 				var toggle = true;
@@ -48,7 +48,7 @@
 				 		keiko.setSize(85,65);
 				 		keiko.center().offset(0,65); 
 						keiko.setImage("Images/Keiko.gif");
-				  	var output1_text = new sjs.Text("Admiral Keiko: Captain Disco, It has come to our attention that Ratamia has been illegaly mining cheese on Cheeseopolis.  Your mission is to stop them by any means possible.", 28, "white");
+				  	var output1_text = new sjs.Text("Admiral Keiko: Captain Disco, It has come to our attention that Ratamia has been illegaly mining cheese on Cheeseopolis.  Your mission is to stop them by any means possible. (Press Enter)", 28, "white");
 						output1_text.centerH().offset(0,60);	
 	
 					}, 2000);
@@ -65,6 +65,8 @@
 			var output_text;
 			function controls(){
 				
+				output_text = new sjs.Text("m key:  Toggles music off/on", 28, "white");
+				output_text.center().offset(11,-175);
 				output_text = new sjs.Text("> key:  Moves right", 28, "white");
 				output_text.center().offset(11,-150);
 				output_text = new sjs.Text("< key:  Moves left", 28, "white");
@@ -72,9 +74,9 @@
 				output_text = new sjs.Text("^ key:  Jumps up", 28, "white");
 				output_text.center().offset(2, -100);
 				output_text = new sjs.Text("space bar:  Shoots laser but only in powerup mode", 28, "white");
-				output_text.center().offset(-10, -75);
-				output_text = new sjs.Text("m key:  Toggles Music", 28, "white");
-				output_text.center().offset(11,-45);
+				output_text.center().offset(-12, -75);
+				
+				
 			}  // end controls
 
 			function rules(){
@@ -121,12 +123,13 @@
 
 	<body onload="start()">
 		<h1> Custom Game </h1>
-	<!--	<audio controls autoplay>
-
-				<source src="Music/Celestial Soda Pop.mp3" type="audio/mpeg">
-				Your browser does not support HTML 5 audio.
+	<!--  The following instantly plays music.  I commented this out to opt for toggling muslic on/off with the "m" key
+		<iframe src="Music/Celestial Soda Pop.mp3" style="display:none" allow="autoplay">
+		</iframe>
+		<audio id="myAudio" src="Music/Celestial Soda Pop.mp3" type="audio/mpeg" autoplay>
+  		
+  		Your browser does not support the audio element.
 		</audio> -->
-		
 		<div id="target" style="margin:auto;background:grey;"></div>
 	</body>
 </html>
