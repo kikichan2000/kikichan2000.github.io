@@ -3,7 +3,7 @@
 		<title> Movie </title>
 		<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
 		<script>
-		canplay = false;
+
 			function start(){
 				sjs.open("target",800,500);		// set player window size
 
@@ -41,11 +41,9 @@
 				var loop = 0;
 				var howManyTimes = 11;
 				var IDvalue = 0;
-				IDvalue = setInterval(shipFlying, 0700);		//fly ship at 0700ms intervals until hits planet
+				IDvalue = setInterval(shipFlying, 0800);		//fly ship at 0800ms intervals until hits planet
 				function shipFlying() {
-					//var x = document.getElementById("Music/rocket.mp3").autoplay;
-					//var audio = new Audio('Music/rocket.mp3')
-					//if (canplay == true){	audio.play();}
+					
 					if (loop < 4) {							// first ship img just go straight up 4 iterations
 						x_shipPos = x_shipPos;
 						y_shipPos = y_shipPos - 50;
@@ -94,10 +92,10 @@
 //****** Now land ship on planet Cheeseopolis ***********
 				var shipTrack1 = 0;
 				var x_shipPos1 = 0;			
-				var y_shipPos1 = -450;	
+				var y_shipPos1 = -450;	 //-450
 				var loop1 = 0;
-				var howManyTimes1 = 9;
-				var IDvalue1 = setInterval(shipLanding, 0700);
+				var howManyTimes1 = 10; //9
+				var IDvalue1 = setInterval(shipLanding, 0800);
 
 				function shipLanding(){
 					if (okToFly == false) {
