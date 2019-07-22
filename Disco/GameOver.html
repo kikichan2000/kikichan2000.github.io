@@ -24,7 +24,7 @@
 				var loop = 0;
 				var howManyTimes = 11;
 				var IDvalue = 0;
-				IDvalue = setInterval(shipFlying, 0700);		//fly ship at 0700ms intervals until hits planet
+				IDvalue = setInterval(shipFlying, 0600);		//fly ship at 0700ms intervals until hits planet
 				function shipFlying() {
 					
 					if (loop < 4) {							// first ship img just go straight up 4 iterations
@@ -70,17 +70,21 @@
 				var gameover_txt = new sjs.Text("So Close!", 44, "orange");
 				gameover_txt.center().offset(0,-50);
 				var restartBtn = new sjs.Button("Try Again?", function(){
-				window.location = "index.html";
+				window.location = "cindex.html";
 				});
 				restartBtn.center();
-				var score_txt = new sjs.Text("Score: 0", 21, "orange");
-				score_txt.setText("Score: " +localStorage.getItem("score"));
 			}
 		</script>
 	</head>
 
 	<body onload="start()">
 		<h1> Rats Rule!!!! </h1>
+		<iframe src="Music/jetson3.wav" style="display:none" allow="autoplay">
+		</iframe>
+		<audio id="myAudio" src="Music/jetson3.wav" type="audio/mpeg" autoplay>
+  		
+  		Your browser does not support the audio element.
+		</audio>
 
 		<div id="target" style="margin:auto;background:grey;"></div>
 	</body>
