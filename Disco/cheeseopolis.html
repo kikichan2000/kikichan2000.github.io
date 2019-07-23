@@ -299,22 +299,24 @@
 				
 			// if the player got the powerup then allow player to shoot the laser
 				sjs.onHit("disco","catnip", function(x,y){
-					y.destroy();
-					disco.setSize(55,63);
-					disco.setImage("Images/dazedDisco.png");
-					sleepingDisco = true;
-					canShoot = false;
-					setTimeout(function(){
-						sleepingDisco =false;
-						disco.setSize(85,93);
-						if ( r_facing = true) {
-							disco.setImage("Images/walkingDisco-12.png");
-						  r_discoPos = 0;
-						} else {
-							disco.setImage("Images/l-walkingDisco-12.png");
-							l_discoPos = 0;
-						}
-					}, 9000); 
+					if (canShoot == false) {			// if Disco in big then catnip will not bother her
+					  y.destroy();
+					  disco.setSize(55,63);
+					  disco.setImage("Images/dazedDisco.png");
+					  sleepingDisco = true;
+					  canShoot = false;
+					  setTimeout(function(){
+						  sleepingDisco =false;
+						  disco.setSize(85,93);
+						  if ( r_facing = true) {
+						  	disco.setImage("Images/walkingDisco-12.png");
+						    r_discoPos = 0;
+						  } else {
+						  	disco.setImage("Images/l-walkingDisco-12.png");
+						  	l_discoPos = 0;
+						  }
+					  }, 9000);
+					} 
 				});
 
 					
